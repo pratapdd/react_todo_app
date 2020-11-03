@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       console.log('--', snapshot)
-      setTodos(snapshot.docs.map(doc => doc.data().todo))
+      setTodos(snapshot.docs.map(doc => ({ id: doc.id, todo: doc.data().todo })))
     })
   }, []);
 
@@ -32,6 +32,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Simple Todo App with Firebase 🚀</h1>
       <form>
         <FormControl>
           <InputLabel>✅ Write a Todo</InputLabel>
@@ -42,9 +43,8 @@ function App() {
           Add Todo
         </Button>
         <ul>
-          {todos.map((todo) => (<Todo text={todo} />))}
+          {todos.map((todo) => (<Todo todo={todo} />))}
         </ul>
-
 
       </form>
     </div>
